@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:ex="http://examyes.com/flex"
+				xmlns:sf="http://www.spicefactory.org/parsley"
+				autoDrawBackground="true" fontFamily="微软雅黑">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<sf:Configure />
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.examyes.flex.tools.Utils;
+			
+			import mx.controls.Menu;
+			import mx.core.FlexGlobals;
+			import mx.events.MenuEvent;
+			import mx.events.StateChangeEvent;
+			import mx.logging.*;
+			
+			import program.application.message.FriendListMessage;
+			import program.application.message.LoginMessage;
+			
+			[MessageDispatcher]
+			public var send:Function;
+			private var LOG:ILogger = Utils.getLogger(this);
+			
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+		<s:State name="selected"/>
+	</s:states>
+	
+	<s:HGroup width="100%" paddingBottom="4" paddingLeft="4" paddingRight="4" paddingTop="4">
+		<s:HGroup width="100%" verticalAlign="middle">
+			<!--<s:BitmapImage x="0" y="0" smooth="true" source="@Embed('./assets/pharos.png')">
+			</s:BitmapImage>-->
+			<s:VGroup>
+				<s:Label text="ID：{data.fid} 昵称：{data.fname}" fontFamily="微软雅黑"/>
+				<s:HGroup>
+					<s:Button label="发起对话" fontFamily="微软雅黑" enabled="{!data.isDialogized}" click="{data.isDialogized = true;send(new FriendListMessage(FriendListMessage.START_DIALOGIZE,data.fid,data.fname));}/* startDialogize(event); */"/>
+					<s:Button label="查看资料" fontFamily="微软雅黑"/>
+					<s:Button label="删除好友" fontFamily="微软雅黑"/>
+					<s:Button label="查看位置" fontFamily="微软雅黑"/>
+				</s:HGroup>
+			</s:VGroup>
+			
+		</s:HGroup>
+	</s:HGroup>
+	
+</s:ItemRenderer>

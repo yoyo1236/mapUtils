@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:view="com.map.*"
+		 xmlns:sf="http://www.spicefactory.org/parsley"
+		 creationComplete="init();"
+		 >
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<sf:Configure/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.esri.ags.SpatialReference;
+			import com.esri.ags.geometry.MapPoint;
+			import com.examyes.flex.tools.ExtJS;
+			import com.map.domain.MapObject;
+			[Inject]
+			[Bindable]
+			public var draw:Draw;
+			
+			public function init():void 
+			{
+				var url:String = ExtJS.call("getMapUrl"); 
+				mapView.initMap(url, 104716065, 48919698.1025, 400, 400); 
+				draw.init(mapView); 
+				var tmpSR:SpatialReference = mapView.baseMapLayer.spatialReference; 
+				/* for(var i:int=0; i<100; i++)
+				{ 
+					var arr:Array = [new MapPoint(-1726185+Math.random()*300000, 9543036, tmpSR),new MapPoint(34923+Math.random()*30000000, 6920940+Math.random()*30000000, tmpSR),2];
+					draw.drawPointMoves(new MapPoint(-1726185+Math.random()*300000, 9543036, tmpSR),
+						new MapPoint(34923+Math.random()*30000000, 6920940+Math.random()*30000000, tmpSR),
+						10  
+					);
+				} */
+				draw.setStableObject(MapObject.OBJECT_STAFF, 100, -1726185/104716065*400, 9543036/48919698.1025*400, MapObject.STATE_ONLINE, "yoyo", "test info");
+				//draw.setMovaleObject(MapObject.OBJECT_STAFF, 100, 300, 300, 1, "yoyo", "test info", true);
+				 var point:Array = [ 
+					 [-1726185/104716065*400, 9543036/48919698.1025*400, 10],
+					 [34923/104716065*400, 6920940/48919698.1025*400, 15],
+					 [1874303/104716065*400, 6255632/48919698.1025*400, 20],
+					 [1735168/104716065*400, 6255632/48919698.1025*400, 25],
+					 [1913439/104716065*400, 7138225/48919698.1025*400, 30]
+				 ];
+				 draw.playHistoryTrace(MapObject.OBJECT_STAFF, 100, point, "xx", "xx", true, 2); 
+				
+			}
+		]]>
+	</fx:Script>
+	<view:MapLayer id="mapView" width="100%" height="100%">
+		
+	</view:MapLayer>
+	 
+	<s:Group x="50" y="0" visible="true"> 
+		<s:layout>
+			<s:VerticalLayout paddingTop="6"/>
+		</s:layout>
+		<s:HGroup>
+			<s:Label fontWeight="bold" text="Current map extent (in geographic):"/>
+			<!--<s:RichEditableText editable="false" text="{showExtentInGeographic(map.extent)}"/>-->
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label fontWeight="bold" text="Current Mouse Coordinates:"/>
+			<s:RichEditableText id="mousecoords" editable="false"
+								text="Move the mouse over the map to see its current coordinates..."/>
+		</s:HGroup>
+		
+	</s:Group>
+</s:Group>

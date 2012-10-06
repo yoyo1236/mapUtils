@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:login="program.presentation.login.*"
+			   xmlns:main="program.presentation.main.*"
+			   xmlns:sf="http://www.spicefactory.org/parsley"
+			   preloader="mx.preloaders.DownloadProgressBar"
+			   pageTitle="长江干线数字航道信息采集与服务测试平台"
+			   applicationComplete="send(new LocalFileMessage(LocalFileMessage.LOAD_LOCAL_DATA));"
+			   minWidth="955" minHeight="600"
+			   >
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		
+		
+		mx|ToolTip {
+			fontSize:12;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<sf:ContextBuilder config="ParsleyContext"/>
+		<sf:Configure />
+		
+		<s:Parallel id="showEff">
+			<s:Rotate3D angleYFrom="-90" angleYTo="0"/>
+			<s:Fade alphaFrom="0.0" alphaTo="1.0"/>
+		</s:Parallel>
+		
+		<s:Parallel id="hideEff">
+			<s:Rotate3D angleYFrom="0" angleYTo="-90"/>
+			<s:Fade alphaFrom="1.0" alphaTo="0.0"/>
+		</s:Parallel>
+		
+		<s:TraceTarget 
+			includeCategory="true" 
+			includeLevel="true" 
+			includeTime="true"
+			level="{LogEventLevel.DEBUG}"
+			>
+			<s:filters>
+				<fx:String>org.spicefactory.parsley.*</fx:String>
+			</s:filters>
+		</s:TraceTarget>
+		
+		<s:TraceTarget 
+			includeCategory="true" 
+			includeLevel="true" 
+			includeTime="true"
+			level="{LogEventLevel.DEBUG}"
+			>
+			<s:filters>
+				<fx:String>program.application.*</fx:String>
+			</s:filters>
+		</s:TraceTarget>
+		
+		<s:TraceTarget
+			includeCategory="true" 
+			includeLevel="true" 
+			includeTime="true"
+			level="{LogEventLevel.DEBUG}"
+			>
+			<s:filters>
+				<fx:String>program.presentation.*</fx:String>
+			</s:filters>
+		</s:TraceTarget>
+		
+		<s:TraceTarget
+			includeCategory="true" 
+			includeLevel="true" 
+			includeTime="true"
+			level="{LogEventLevel.DEBUG}"
+			>
+			<s:filters>
+				<fx:String>program.infrastructure.*</fx:String>
+			</s:filters>
+		</s:TraceTarget>
+		
+		<s:TraceTarget
+			includeCategory="true" 
+			includeLevel="true" 
+			includeTime="true"
+			level="{LogEventLevel.DEBUG}"
+			>
+			<s:filters>
+				<fx:String>program.domain.*</fx:String>
+			</s:filters>
+		</s:TraceTarget>
+		
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.examyes.flex.containers.fxwindow.FxWindow;
+			
+			import mx.logging.LogEventLevel;
+			
+			import program.application.message.LocalFileMessage;
+			import program.application.message.DialogMessage;
+			
+			[MessageDispatcher]
+			public var send:Function;
+		]]>
+	</fx:Script>
+	
+	<mx:ViewStack id="vs" width="100%" height="100%" selectedIndex="{loginView.model.loginStatus}">
+		<s:NavigatorContent width="100%" height="100%" showEffect="{showEff}" hideEffect="{hideEff}">
+			<s:layout>
+				<s:VerticalLayout verticalAlign="middle" horizontalAlign="center"/>
+			</s:layout>
+			<login:LoginView id="loginView"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" showEffect="{showEff}" hideEffect="{hideEff}">
+			<main:MainView id="mainView" width="100%" height="100%"/> 
+		</s:NavigatorContent>
+	</mx:ViewStack>	
+	
+	
+</s:Application>
