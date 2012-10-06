@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="200"
+		 title="请输入讨论组名称"
+		 >
+	<fx:Metadata>
+		[Event(name="DiscussGroupConfig", type="flash.events.Event")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+		import mx.managers.PopUpManager;
+		private function checkMe():void
+		{
+			if(DiscussGroupName.text == "")
+			{
+				return;
+			}
+			//如果输入有效数据，那么分发登陆事件;
+			dispatchEvent(new Event("DiscussGroupConfig"));
+			closeMe();
+		}
+		//利用弹出窗口管理器移除自己;
+		private function closeMe():void
+		{
+			PopUpManager.removePopUp(this);
+		}
+		]]>
+	</fx:Script>
+	<mx:HBox width="260" height="20" />
+	<mx:HBox width="260">
+		<mx:Label text="讨论组名称:" width="100" textAlign="right" fontFamily="微软雅黑"/>
+		<mx:TextInput id="DiscussGroupName" width="100" fontFamily="微软雅黑"/>
+	</mx:HBox>
+	<mx:HBox width="260" horizontalAlign="center">
+		<mx:Button label="确定" id="btnLogin" click="checkMe()" fontFamily="微软雅黑"/>
+		<mx:Button label="取消" id="btnCancel" click="closeMe()" fontFamily="微软雅黑"/>
+	</mx:HBox>
+</mx:Panel>

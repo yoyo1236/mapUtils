@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:main="program.presentation.main.*"
+		 xmlns:map="program.presentation.map.*"
+		 xmlns:sf="http://www.spicefactory.org/parsley"
+		 creationComplete="init();">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+		<s:Parallel id="showEff">
+			<s:Rotate3D angleYFrom="-90" angleYTo="0"/>
+			<s:Fade alphaFrom="0.0" alphaTo="1.0"/>
+		</s:Parallel>
+		
+		<s:Parallel id="hideEff">
+			<s:Rotate3D angleYFrom="0" angleYTo="-90"/>
+			<s:Fade alphaFrom="1.0" alphaTo="0.0"/>
+		</s:Parallel>
+		
+		
+		<sf:Configure />
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.examyes.flex.tools.Utils;
+			
+			import mx.controls.Alert;
+			import mx.logging.*;
+			import mx.managers.PopUpManager;
+			
+			
+			private var LOG:ILogger = Utils.getLogger(this);
+			
+			[Inject]
+			public var model:MainViewPM;
+			
+			private function init():void
+			{
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Group height="100%" width="100%">
+		
+		
+		<s:layout>
+			<s:VerticalLayout>
+				
+			</s:VerticalLayout>
+		</s:layout>
+		
+		<main:MainViewHeader id="header" width="100%" height="40" dock="true" />
+		
+		<s:Group height="100%" width="100%">
+			<s:layout>
+				<s:VerticalLayout />
+			</s:layout>
+			<map:MapViewTest id="mapView" width="100%" height="100%"/>
+			<!--<main:DynamicView id="dynamicView" width="100%" height="250"
+								chromeColor="0xFFFFFF"/> 	-->
+			<!--<presentation:FunctionsView id="functionsView" width="100%" height="250" chromeColor="0xFFFFFF" /> 	-->	
+		</s:Group>
+	</s:Group>
+</s:Group>
